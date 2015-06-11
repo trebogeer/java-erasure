@@ -4,14 +4,14 @@ A Java erasure codes wrapper library for Jerasure(http://jerasure.org/)
 
 ## Usage
 ### Install gf-complete
-    git clone git@lab.jerasure.org:jerasure/gf-complete.git
+    git clone http://lab.jerasure.org/jerasure/gf-complete.git
     cd gf-complete
     ./autogen.sh
     ./configure
     make
     sudo make install
 ### Install jerasure
-    git clone git@lab.jerasure.org:jerasure/jerasure.git
+    git clone http://lab.jerasure.org/jerasure/jerasure.git
     cd jerasure
     autoreconf --force --install -I m4
     ./configure
