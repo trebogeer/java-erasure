@@ -17,9 +17,7 @@
  */
 package com.xiaomi.infra.ec.rs;
 
-import com.google.common.base.Preconditions;
 import com.sun.jna.Pointer;
-
 import com.xiaomi.infra.ec.CodecInterface;
 import com.xiaomi.infra.ec.CodecUtils;
 import com.xiaomi.infra.ec.JerasureLibrary;
@@ -35,12 +33,12 @@ public class ReedSolomonCodec implements CodecInterface {
   private int[] vandermondeMatrix;
 
   public ReedSolomonCodec(int dataBlockNum, int codingBlockNum, int wordSize) {
-    Preconditions.checkArgument(dataBlockNum > 0);
-    Preconditions.checkArgument(codingBlockNum > 0);
-    Preconditions.checkArgument(wordSize == 8 || wordSize == 16 ||
-        wordSize == 32, "wordSize must be one of 8, 16 and 32");
-    Preconditions.checkArgument((dataBlockNum + codingBlockNum) < (1<<wordSize),
-        "dataBlocksNum + codingBlocksNum is larger than 2^wordSize");
+    assert dataBlockNum > 0;
+    assert codingBlockNum > 0;
+    assert wordSize == 8 || wordSize == 16 ||
+        wordSize == 32: "wordSize must be one of 8, 16 and 32";
+    assert (dataBlockNum + codingBlockNum) < (1<<wordSize):
+        "dataBlocksNum + codingBlocksNum is larger than 2^wordSize";
 
     this.dataBlockNum = dataBlockNum;
     this.codingBlockNum = codingBlockNum;
@@ -50,9 +48,8 @@ public class ReedSolomonCodec implements CodecInterface {
   }
 
   /** {@inheritDoc} */
-  @Override
   public byte[][] encode(byte[][] data) {
-    Preconditions.checkArgument(data.length > 0);
+    assert data.length > 0;
 
     Pointer[] dataPtrs = CodecUtils.toPointerArray(data);
     int size = data[0].length;
@@ -66,9 +63,8 @@ public class ReedSolomonCodec implements CodecInterface {
   }
 
   /** {@inheritDoc} */
-  @Override
   public void decode(int[] erasures, byte[][]data, byte[][] coding) {
-    Preconditions.checkArgument(data.length > 0);
+    assert data.length > 0;
 
     Pointer[] dataPtrs = CodecUtils.toPointerArray(data);
     Pointer[] codingPtrs = CodecUtils.toPointerArray(coding);

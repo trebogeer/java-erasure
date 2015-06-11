@@ -17,7 +17,6 @@
  */
 package com.xiaomi.infra.ec.rs;
 
-import com.google.common.base.Preconditions;
 import com.sun.jna.Pointer;
 
 import com.xiaomi.infra.ec.CodecInterface;
@@ -39,13 +38,13 @@ public class CauchyReedSolomonCodec implements CodecInterface {
 
   public CauchyReedSolomonCodec(int dataBlockNum, int codingBlockNum,
       int wordSize, int packetSize, boolean good) {
-    Preconditions.checkArgument(dataBlockNum > 0);
-    Preconditions.checkArgument(codingBlockNum > 0);
-    Preconditions.checkArgument(packetSize > 0);
-    Preconditions.checkArgument((dataBlockNum + codingBlockNum) < (1<<wordSize),
-        "dataBlocksNum + codingBlocksNum is larger than 2^wordSize");
-    Preconditions.checkArgument(packetSize % 8 == 0,
-        "packetSize must be multiple of 8");
+    assert dataBlockNum > 0;
+    assert codingBlockNum > 0;
+    assert packetSize > 0;
+    assert (dataBlockNum + codingBlockNum) < (1<<wordSize) :
+        "dataBlocksNum + codingBlocksNum is larger than 2^wordSize";
+    assert packetSize % 8 == 0 :
+        "packetSize must be multiple of 8";
 
     this.dataBlockNum = dataBlockNum;
     this.codingBlockNum = codingBlockNum;
@@ -69,11 +68,10 @@ public class CauchyReedSolomonCodec implements CodecInterface {
   }
 
   /** {@inheritDoc} */
-  @Override
   public byte[][] encode(byte[][] data) {
-    Preconditions.checkArgument(data.length > 0);
-    Preconditions.checkArgument(data[0].length % (wordSize * packetSize) == 0,
-        "data length must be multiple of wordSize * packetSize");
+    assert data.length > 0;
+    assert data[0].length % (wordSize * packetSize) == 0:
+        "data length must be multiple of wordSize * packetSize";
 
     Pointer[] dataPtrs = CodecUtils.toPointerArray(data);
     int size = data[0].length;
@@ -88,9 +86,8 @@ public class CauchyReedSolomonCodec implements CodecInterface {
   }
 
   /** {@inheritDoc} */
-  @Override
   public void decode(int[] erasures, byte[][]data, byte[][] coding) {
-    Preconditions.checkArgument(data.length > 0);
+    assert data.length > 0;
 
     Pointer[] dataPtrs = CodecUtils.toPointerArray(data);
     Pointer[] codingPtrs = CodecUtils.toPointerArray(coding);

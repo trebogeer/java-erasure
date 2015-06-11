@@ -28,7 +28,7 @@ public interface CodecInterface {
    * @param data The data blocks matrix
    * @return The coding blocks matrix
    */
-  public byte[][] encode(byte[][] data);
+  byte[][] encode(byte[][] data);
 
   /**
    * Decodes specified failed data blocks. This method is thread safe and
@@ -38,5 +38,5 @@ public interface CodecInterface {
    * @param data The data blocks matrix
    * @param coding The coding blocks matrix
    */
-  public void decode(int[] erasures, byte[][]data, byte[][] coding);
+  void decode(int[] erasures, byte[][]data, byte[][] coding);
 }
